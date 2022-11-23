@@ -56,17 +56,16 @@ app.get("/blocking", async (req, res) => {
   //   let counter = 0;
   //   for (let i = 0; i < 20_000_000_000; i++) {
   //      counter++;
-  //   }
-  //   const counter = await calculation();
-  // //   const worker = new Worker("./workerThreadIndex");
-  // //   worker.on("message", (data) => {
-  // //     res.status(200).send(`result is ${data}`);
-  // //   });
-  // //   worker.on("error", (err) => {
-  // //     res.status(401).send(`an error occured: ${err}`);
-  //   });
-  //   res.status(200).send(`result is ${counter}`);
-
+  // //   }
+  // const counter = await calculation();
+  // const worker = new Worker("./workerThreadIndex");
+  // worker.on("message", (data) => {
+  //   res.status(200).send(`result is ${data}`);
+  // });
+  // worker.on("error", (err) => {
+  //   res.status(401).send(`an error occured: ${err}`);
+  // });
+  console.time();
   const workerPromises = [];
   for (let i = 0; i < THREAD_COUNT; i++) {
     workerPromises.push(createWorker());
@@ -76,6 +75,7 @@ app.get("/blocking", async (req, res) => {
   const total = thread_results[0] + thread_results[1] + thread_results[2] + thread_results[3];
   console.log(thread_results[0]);
   res.status(200).send(`result is ${total}`);
+  console.timeEnd();
 });
 
 /*
